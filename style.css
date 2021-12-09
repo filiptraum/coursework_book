@@ -55,12 +55,12 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 7px;
 }
 
 button.item {
   background-color: orange;
-  padding: 15px;
+  padding: 10px 15px;
   cursor: pointer;
   border: none;
 }
@@ -79,4 +79,14 @@ input.item {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.items .item:last-child {
+  margin-top: 7px;
 }

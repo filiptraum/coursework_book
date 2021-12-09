@@ -3,8 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Курсова №8</title>
+  <title>Курсова</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -22,12 +21,20 @@
       
       <div class="navigation">
         <div class="box">
-          <button class="item" id="prevPage">Попередня сторінка</button>
+          <div class="items">
+            <button class="item" id="firstPage">Перша сторінка</button>
+            <button class="item" id="prevPage">Попередня сторінка</button>
+          </div>
+          
           <div class="block">
             <input class="item" type="number" value="1" id="currentPage">
             сторінка
           </div>
-          <button class="item" id="nextPage">Наступна сторінка</button>
+
+          <div class="items">
+            <button class="item" id="nextPage">Наступна сторінка</button>
+            <button class="item" id="lastPage">Остання сторінка</button>
+          </div>
         </div>
       </div>
     </div>

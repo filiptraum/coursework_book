@@ -65,7 +65,15 @@ inputFile.addEventListener("change", () => {
       document.querySelector(selector).addEventListener("click", () => {
         const page = document.querySelector("#currentPage");
 
-        if (
+        if (num === null) {
+          if (selector === "#firstPage") {
+            page.value = 1;
+          } else if (selector === "#lastPage") {
+            page.value = processedContent.length;
+          }
+
+          helper();
+        } else if (
           (+page.value < processedContent.length && num === 1) ||
           (+page.value > 1 && num === -1)
         ) {
@@ -77,10 +85,12 @@ inputFile.addEventListener("change", () => {
     };
 
     if (!loaded) {
-      setHandler("#nextPage", 1);
-      setHandler("#prevPage", -1);
-
       loaded = true;
+
+      setHandler("#prevPage", -1);
+      setHandler("#nextPage", 1);
+      setHandler("#firstPage", null);
+      setHandler("#lastPage", null);
 
       document.querySelector("#currentPage").addEventListener("input", () => {
         const page = document.querySelector("#currentPage");
@@ -89,9 +99,9 @@ inputFile.addEventListener("change", () => {
           page.value = 1;
         } else if (page.value > processedContent.length) {
           page.value = processedContent.length;
-        } else {
-          helper();
         }
+
+        helper();
       });
     }
   });
