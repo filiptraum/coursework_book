@@ -35,6 +35,7 @@ body {
 }
 
 .page {
+  text-align: justify;
   word-break: break-all;
   padding-top: 6px;
 }
@@ -42,7 +43,6 @@ body {
 .navigation {
   max-width: 550px;
   margin: 0 auto;
-  
 }
 .box {
   display: flex;

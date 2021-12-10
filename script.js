@@ -27,14 +27,14 @@ inputFile.addEventListener("change", () => {
     const maxCharactersInRow = Math.floor(
       (+pagesContainer.clientWidth - 20) / 10
     );
-    const maxLines = Math.floor((+pagesContainer.clientHeight - 20) / 17);
+    const maxLines = Math.floor((+pagesContainer.clientHeight - 20) / 17.5);
+
+    const numToSlice = maxCharactersInRow * maxLines + maxCharactersInRow / 2;
 
     const processedContent = [];
 
-    const processContent = () => {
+    const processContent = (i) => {
       if (linesStrings.length === 0) return 1;
-
-      const numToSlice = maxCharactersInRow * maxLines + maxCharactersInRow / 2;
 
       const text = linesStrings.slice(0, numToSlice);
 
@@ -42,15 +42,31 @@ inputFile.addEventListener("change", () => {
 
       linesStrings = linesStrings.slice(numToSlice);
 
-      return 1;
+      while (pagesContainer.clientHeight === pagesContainer.scrollHeight) {
+        if (linesStrings.length === 0) break;
+
+        processedContent[i] += linesStrings[0];
+
+        pagesContainer.innerHTML = `
+        <div class='page processing' id='page-${i}'>
+          ${processedContent[i]}
+        </div>
+      `;
+
+        if (pagesContainer.clientHeight === pagesContainer.scrollHeight) {
+          linesStrings = linesStrings.slice(1);
+        } else {
+          processedContent[i] = processedContent[i].slice(0, -1);
+
+          break;
+        }
+      }
+
+      return 0;
     };
 
-    const helper = () => {
+    const showContent = () => {
       const page = +document.querySelector("#currentPage").value;
-
-      for (let i = 0; i <= page; i++) {
-        if (processContent() === 1) continue;
-      }
 
       pagesContainer.innerHTML = `
         <div class='page' id='page-${page}'>
@@ -59,7 +75,16 @@ inputFile.addEventListener("change", () => {
       `;
     };
 
-    helper();
+    let counter = 0;
+    while (true) {
+      if (processContent(counter) === 1) break;
+
+      pagesContainer.innerHTML = "processing...";
+
+      counter++;
+    }
+
+    showContent();
 
     const setHandler = (selector, num) => {
       document.querySelector(selector).addEventListener("click", () => {
@@ -72,14 +97,14 @@ inputFile.addEventListener("change", () => {
             page.value = processedContent.length;
           }
 
-          helper();
+          showContent();
         } else if (
           (+page.value < processedContent.length && num === 1) ||
           (+page.value > 1 && num === -1)
         ) {
           page.value = +page.value + num;
 
-          helper();
+          showContent();
         }
       });
     };
@@ -101,7 +126,7 @@ inputFile.addEventListener("change", () => {
           page.value = processedContent.length;
         }
 
-        helper();
+        showContent();
       });
     }
   });
